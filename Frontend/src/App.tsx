@@ -8,6 +8,8 @@ import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="*" element={<LoginPage />} /> {/* Optional fallback */}
           <Route path="*" element={<NotFound />} />
         </Routes>
