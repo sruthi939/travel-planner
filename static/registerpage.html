@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #181c23;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(251, 196, 117, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 228, 199, 0.04) 0%, transparent 50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .register-container {
+      background: rgba(24, 28, 35, 0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 234, 199, 0.1);
+      box-shadow: 
+        0 25px 50px rgba(0,0,0,0.25),
+        0 0 0 1px rgba(255, 234, 199, 0.05),
+        inset 0 1px 0 rgba(255, 234, 199, 0.1);
+      padding: 48px 42px 40px 42px;
+      width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: center bottom;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .register-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #fbc475, #ffe4b5, transparent);
+      border-radius: 24px 24px 0 0;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+    
+    .register-title {
+      text-align: left;
+      font-size: 2.2rem;
+      color: #ffeac7;
+      font-weight: 700;
+      margin-bottom: 32px;
+      letter-spacing: -0.5px;
+      position: relative;
+      animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    
+    .input-group:nth-child(3) { animation-delay: 0.1s; }
+    .input-group:nth-child(4) { animation-delay: 0.2s; }
+    .input-group:nth-child(5) { animation-delay: 0.3s; }
+    .input-group:nth-child(6) { animation-delay: 0.4s; }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    label {
+      font-weight: 600;
+      color: #fee8bc;
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+      font-size: 0.95rem;
+      display: block;
+      transition: color 0.3s ease;
+    }
+    
+    .register-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid rgba(236, 209, 163, 0.3);
+      border-radius: 12px;
+      color: #ffeac7;
+      font-size: 1.05rem;
+      padding: 16px 18px;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      font-family: inherit;
+      position: relative;
+    }
+    
+    .register-input::placeholder {
+      color: rgba(255, 234, 199, 0.4);
+      transition: color 0.3s ease;
+    }
+    
+    .register-input:focus {
+      border-color: #fbc475;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 
+        0 0 0 3px rgba(251, 196, 117, 0.1),
+        0 8px 25px rgba(251, 196, 117, 0.05);
+      transform: translateY(-1px);
+    }
+    
+    .register-input:focus::placeholder {
+      color: rgba(255, 234, 199, 0.6);
+    }
+    
+    .register-input:focus + label {
+      color: #ffc76a;
+    }
+    
+    .captcha-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 32px;
+      margin-top: 8px;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      border: 2px solid rgba(236, 209, 163, 0.15);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+    }
+    
+    .captcha-row:hover {
+      border-color: rgba(251, 196, 117, 0.3);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .register-captcha-checkbox {
+      accent-color: #fbc475;
+      width: 20px;
+      height: 20px;
+      margin-right: 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    
+    .register-captcha-checkbox:hover {
+      transform: scale(1.1);
+    }
+    
+    .register-captcha-label {
+      color: #eee0b2;
+      font-size: 1.02rem;
+      font-weight: 500;
+      cursor: pointer;
+      -webkit-user-select: none; 
+      -moz-user-select: none;
+      -ms-user-select: none; 
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    
+    .captcha-row:hover .register-captcha-label {
+      color: #ffc76a;
+    }
+    
+    .register-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #fbc475 0%, #ffe4b5 100%);
+      color: #232a34;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 18px 0;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      box-shadow: 
+        0 8px 25px rgba(251, 196, 117, 0.15),
+        0 0 0 0 rgba(251, 196, 117, 0.4);
+      position: relative;
+      overflow: hidden;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+    }
+    
+    .register-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .register-btn:hover {
+      background: linear-gradient(135deg, #ffe4b5 0%, #fbc475 100%);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 12px 35px rgba(251, 196, 117, 0.25),
+        0 0 0 3px rgba(251, 196, 117, 0.1);
+    }
+    
+    .register-btn:hover::before {
+      left: 100%;
+    }
+    
+    .register-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 15px rgba(251, 196, 117, 0.2);
+    }
+    
+    .login-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 1.02rem;
+      color: #ffe2bb;
+      font-weight: 500;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+    }
+    
+    .login-link a {
+      color: #ffc76a;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .login-link a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ffc76a, #ffdba6);
+      transition: width 0.3s ease;
+    }
+    
+    .login-link a:hover {
+      color: #ffdba6;
+      transform: translateY(-1px);
+    }
+    
+    .login-link a:hover::after {
+      width: 100%;
+    }
+    
+    @media (max-width: 550px) {
+      .register-container { 
+        width: 95vw; 
+        padding: 32px 24px 28px 24px;
+        margin: 20px 10px;
+      }
+      
+      .register-title {
+        font-size: 1.9rem;
+        margin-bottom: 28px;
+      }
+      
+      .input-group {
+        margin-bottom: 24px;
+      }
+      
+      .register-input {
+        padding: 14px 16px;
+        font-size: 1rem;
+      }
+      
+      .captcha-row {
+        padding: 14px 18px;
+        margin-bottom: 28px;
+      }
+      
+      .register-btn {
+        padding: 16px 0;
+        font-size: 1.05rem;
+      }
+    }
+    
+    /* Focus indicators for accessibility */
+    .register-input:focus-visible,
+    .register-captcha-checkbox:focus-visible,
+    .register-btn:focus-visible,
+    .login-link a:focus-visible {
+      outline: 2px solid #ffc76a;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <form class="register-container">
+    <div class="register-title">Create Account</div>
+    
+    <div class="input-group">
+      <label for="fullname">Full Name</label>
+      <input class="register-input" type="text" id="fullname" name="fullname" placeholder="Enter your full name" required />
+    </div>
+    
+    <div class="input-group">
+      <label for="email">Email Address</label>
+      <input class="register-input" type="email" id="email" name="email" placeholder="Enter your email address" required />
+    </div>
+    
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input class="register-input" type="password" id="password" name="password" placeholder="Create a strong password" required />
+    </div>
+    
+    <div class="input-group">
+      <label for="confirmpassword">Confirm Password</label>
+      <input class="register-input" type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm your password" required />
+    </div>
+    
+    <div class="captcha-row">
+      <input class="register-captcha-checkbox" type="checkbox" id="captcha" required>
+      <label for="captcha" class="register-captcha-label">I'm not a robot</label>
+    </div>
+    
+    <button class="register-btn" type="submit">Create Account</button>
+    
+    <div class="login-link">
+      Already have an account?
+      <a href="/login.html">Sign In</a>
+    </div>
+  </form>
+</body>
+</html>

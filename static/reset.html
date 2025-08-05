@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reset Password</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #181c23;
+      background-image: 
+        radial-gradient(circle at 25% 75%, rgba(251, 196, 117, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(255, 228, 199, 0.03) 0%, transparent 50%);
+      min-height: 100vh;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+    
+    .reset-container {
+      background: rgba(24, 28, 35, 0.98);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 234, 199, 0.12);
+      box-shadow: 
+        0 25px 50px rgba(0,0,0,0.3),
+        0 0 0 1px rgba(255, 234, 199, 0.05),
+        inset 0 1px 0 rgba(255, 234, 199, 0.1);
+      padding: 48px 40px 40px 40px;
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      animation: slideUpScale 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    @keyframes slideUpScale {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .reset-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #fbc475, #ffe4b5, #fbc475, transparent);
+      border-radius: 24px 24px 0 0;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.9; }
+    }
+    
+
+    
+    .reset-title {
+      text-align: left;
+      font-size: 2.2rem;
+      color: #ffeac7;
+      font-weight: 700;
+      margin-bottom: 30px;
+      letter-spacing: -0.5px;
+      position: relative;
+      animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+    
+    .reset-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #fbc475, #ffe4b5);
+      border-radius: 2px;
+      animation: expandWidth 1s ease-out 0.8s both;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes expandWidth {
+      from { width: 0; }
+      to { width: 60px; }
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    
+    .input-group:nth-child(3) { animation-delay: 0.2s; }
+    .input-group:nth-child(4) { animation-delay: 0.3s; }
+    .input-group:nth-child(5) { animation-delay: 0.4s; }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    label {
+      font-weight: 600;
+      color: #fee8bc;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+      font-size: 0.95rem;
+      display: block;
+      transition: all 0.3s ease;
+    }
+    
+    .reset-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.025);
+      border: 2px solid rgba(236, 209, 163, 0.25);
+      border-radius: 14px;
+      color: #ffeac7;
+      font-size: 1.05rem;
+      padding: 16px 20px;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      font-family: inherit;
+      position: relative;
+    }
+    
+    .reset-input::placeholder {
+      color: rgba(255, 234, 199, 0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .reset-input:focus {
+      border-color: #fbc475;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 
+        0 0 0 3px rgba(251, 196, 117, 0.12),
+        0 10px 30px rgba(251, 196, 117, 0.06);
+      transform: translateY(-2px);
+    }
+    
+    .reset-input:focus::placeholder {
+      color: rgba(255, 234, 199, 0.6);
+      transform: translateX(5px);
+    }
+    
+    .reset-input:focus + label {
+      color: #ffc76a;
+      transform: translateY(-2px);
+    }
+    
+    .reset-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #fbc475 0%, #ffe4b5 100%);
+      color: #232a34;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 18px 0;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      margin-top: 12px;
+      margin-bottom: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      box-shadow: 
+        0 8px 25px rgba(251, 196, 117, 0.2),
+        0 0 0 0 rgba(251, 196, 117, 0.4);
+      position: relative;
+      overflow: hidden;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+    }
+    
+    .reset-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .reset-btn::after {
+      content: '🔐';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .reset-btn:hover {
+      background: linear-gradient(135deg, #ffe4b5 0%, #fbc475 100%);
+      transform: translateY(-3px);
+      box-shadow: 
+        0 15px 40px rgba(251, 196, 117, 0.3),
+        0 0 0 3px rgba(251, 196, 117, 0.1);
+    }
+    
+    .reset-btn:hover::before {
+      left: 100%;
+    }
+    
+    .reset-btn:hover::after {
+      transform: translateY(-50%) rotate(10deg) scale(1.1);
+    }
+    
+    .reset-btn:active {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 20px rgba(251, 196, 117, 0.25);
+    }
+    
+    .login-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 1.02rem;
+      color: #ffe2bb;
+      font-weight: 500;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+    }
+    
+    .login-link a {
+      color: #ffc76a;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .login-link a::before {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ffc76a, #ffdba6);
+      transition: width 0.4s ease;
+    }
+    
+    .login-link a::after {
+      content: '←';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+    
+    .login-link a:hover {
+      color: #ffdba6;
+      transform: translateX(8px);
+      padding-left: 16px;
+    }
+    
+    .login-link a:hover::before {
+      width: 100%;
+    }
+    
+    .login-link a:hover::after {
+      opacity: 1;
+      left: -16px;
+    }
+    
+    .security-note {
+      background: rgba(251, 196, 117, 0.08);
+      border: 1px solid rgba(251, 196, 117, 0.2);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-top: 20px;
+      color: #fee8bc;
+      font-size: 0.9rem;
+      text-align: center;
+      position: relative;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+    }
+    
+    .security-note::before {
+      content: '🛡️';
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-5px); }
+      60% { transform: translateY(-3px); }
+    }
+    
+    @media (max-width: 500px) {
+      .reset-container { 
+        width: 95vw; 
+        padding: 36px 28px 32px 28px;
+        margin: 20px 10px;
+      }
+      
+      .reset-title {
+        font-size: 1.9rem;
+        margin-bottom: 26px;
+      }
+      
+      .input-group {
+        margin-bottom: 24px;
+      }
+      
+      .reset-input {
+        padding: 14px 18px;
+        font-size: 1rem;
+      }
+      
+      .reset-btn {
+        padding: 16px 0;
+        font-size: 1.05rem;
+      }
+      
+      .security-note {
+        font-size: 0.85rem;
+        padding: 14px 16px;
+      }
+    }
+    
+    /* Focus indicators for accessibility */
+    .reset-input:focus-visible,
+    .reset-btn:focus-visible,
+    .login-link a:focus-visible {
+      outline: 2px solid #ffc76a;
+      outline-offset: 2px;
+    }
+    
+    /* Password strength indicator */
+    .password-strength {
+      margin-top: 8px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .password-strength::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f);
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <form class="reset-container">
+    <div class="reset-title">Reset Password</div>
+    
+    <div class="input-group">
+      <label for="email">Email Address</label>
+      <input class="reset-input" type="email" id="email" name="email" placeholder="Enter your email address" required />
+    </div>
+    
+    <div class="input-group">
+      <label for="newpassword">New Password</label>
+      <input class="reset-input" type="password" id="newpassword" name="newpassword" placeholder="Create a strong password" required />
+      <div class="password-strength"></div>
+    </div>
+    
+    <div class="input-group">
+      <label for="confirmpassword">Confirm New Password</label>
+      <input class="reset-input" type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm your new password" required />
+    </div>
+    
+    <button class="reset-btn" type="submit">Reset Password</button>
+    
+    <div class="security-note">
+      Your new password will be securely encrypted
+    </div>
+    
+    <div class="login-link">
+      Remembered your password?
+      <a href="/login.html">Sign In</a>
+    </div>
+  </form>
+
+  <script>
+    // Simple password strength indicator
+    const passwordInput = document.getElementById('newpassword');
+    const strengthBar = document.querySelector('.password-strength::after');
+    
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      let strength = 0;
+      
+      if (password.length >= 8) strength += 25;
+      if (/[A-Z]/.test(password)) strength += 25;
+      if (/[0-9]/.test(password)) strength += 25;
+      if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+      
+      document.querySelector('.password-strength').style.setProperty('--strength', strength + '%');
+    });
+  </script>
+  
+  <style>
+    .password-strength::after {
+      width: var(--strength, 0%);
+    }
+  </style>
+</body>
+</html>

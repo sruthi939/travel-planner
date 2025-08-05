@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Travel Admin - Dark Mode</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --tertiary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --warning-gradient: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            --danger-gradient: linear-gradient(135deg, #dc3545 0%, #e91e63 100%);
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --sidebar-bg: rgba(0, 0, 0, 0.9);
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8b8;
+            --accent-color: #667eea;
+            --glow-color: rgba(102, 126, 234, 0.3);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(240, 147, 251, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundShift 30s ease-in-out infinite;
+        }
+        @keyframes backgroundShift {
+            0%, 100% { 
+                background: 
+                    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 80%, rgba(240, 147, 251, 0.08) 0%, transparent 50%);
+            }
+            50% {
+                background: 
+                    radial-gradient(circle at 70% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 30% 70%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 90% 20%, rgba(240, 147, 251, 0.08) 0%, transparent 50%);
+            }
+        }
+        /* Layout */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 30px;
+        }
+        .sidebar-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .admin-badge {
+            background: var(--secondary-gradient);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+        .nav-menu {
+            list-style: none;
+            padding: 0 20px;
+        }
+        .nav-item {
+            margin-bottom: 5px;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+            background: var(--card-bg);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px var(--glow-color);
+        }
+        .nav-link:hover::before, .nav-link.active::before {
+            left: 0;
+        }
+        .nav-link i {
+            font-size: 1.2rem;
+            min-width: 20px;
+        }
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 30px;
+        }
+        .content-header {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .content-title h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+        .breadcrumbs {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .btn {
+            background: var(--primary-gradient);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px var(--glow-color);
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn-success {
+            background: var(--success-gradient);
+        }
+        .btn-warning {
+            background: var(--warning-gradient);
+        }
+        .btn-danger {
+            background: var(--danger-gradient);
+        }
+        .btn-secondary {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .dashboard-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+        .dashboard-card:hover::before {
+            transform: scaleX(1);
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: white;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        /* Data Table */
+        .data-table-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .table-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .search-box, .filter-select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        .search-box::placeholder {
+            color: var(--text-secondary);
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th,
+        .data-table td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .data-table th {
+            background: rgba(255, 255, 255, 0.02);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .data-table td {
+            color: var(--text-primary);
+        }
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .table-image {
+            width: 60px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 600;
+        }
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-active {
+            background: var(--success-gradient);
+            color: white;
+        }
+        .status-inactive {
+            background: var(--warning-gradient);
+            color: white;
+        }
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            border-radius: 8px;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: var(--darker-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px;
+            border-radius: 50%;
+        }
+        .modal-close:hover {
+            color: var(--text-primary);
+            background: var(--card-bg);
+        }
+        .modal-body {
+            padding: 30px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .form-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 20px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px var(--glow-color);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        .file-upload input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: var(--card-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+        .file-upload-label:hover {
+            border-color: var(--accent-color);
+            background: rgba(102, 126, 234, 0.1);
+        }
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .content-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-in {
+            animation: slideInUp 0.6s ease-out;
+        }
+        /* Loading state */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .btn-loading {
+            position: relative;
+        }
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Sync Indicator */
+        .sync-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success-gradient);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            z-index: 3000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+        .sync-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .sync-indicator i {
+            animation: syncRotate 2s linear infinite;
+        }
+        @keyframes syncRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Load the enhanced data management system -->
+    <script src="data.js"></script>
+
+    <!-- Sync Indicator -->
+    <div id="sync-indicator" class="sync-indicator">
+        <i class="fas fa-sync-alt"></i> Changes synced to destination page!
+    </div>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Travel Admin</h1>
+                <span class="admin-badge">Administrator</span>
+                <a href="destination.html" class="destination-link" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> View Destination Page
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#destinations" class="nav-link" data-section="destinations">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Destinations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#categories" class="nav-link" data-section="categories">
+                            <i class="fas fa-tags"></i>
+                            Categories
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="content-header animate-in">
+                    <div class="content-title">
+                        <h2>Dashboard</h2>
+                        <div class="breadcrumbs">Admin Panel / Dashboard</div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="showAddModal('destination')">
+                            <i class="fas fa-plus"></i>
+                            Add Destination
+                        </button>
+                    </div>
+                </div>
+                <div class="dashboard-grid animate-in">
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="card-title">Total Destinations</div>
+                        <div class="card-value" id="totalDestinations">12</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon" style="background: var(--secondary-gradient);">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="card-title">Categories</div>
+                        <div class="card-value" id="totalCategories">4</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon" style="background: var(--success-gradient);">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="card-title">Images</div>
+                        <div class="card-value" id="totalImages">28</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon" style="background: var(--warning-gradient);">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="card-title">Total Views</div>
+                        <div class="card-value">15.2K</div>
+                    </div>
+                </div>
+            </section>
+            <!-- Destinations Section -->
+            <section id="destinations" class="content-section">
+                <div class="content-header">
+                    <div class="content-title">
+                        <h2>Manage Destinations</h2>
+                        <div class="breadcrumbs">Admin Panel / Destinations</div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="showAddModal('destination')">
+                            <i class="fas fa-plus"></i>
+                            Add New Destination
+                        </button>
+                    </div>
+                </div>
+                <div class="data-table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">All Destinations</h3>
+                        <div class="search-filter">
+                            <input type="text" class="search-box" placeholder="Search destinations..." id="destinationSearch">
+                            <select class="filter-select" id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="destinationsTableBody">
+                            <!-- Destinations will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- Categories Section -->
+            <section id="categories" class="content-section">
+                <div class="content-header">
+                    <div class="content-title">
+                        <h2>Manage Categories</h2>
+                        <div class="breadcrumbs">Admin Panel / Categories</div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="showAddModal('category')">
+                            <i class="fas fa-plus"></i>
+                            Add New Category
+                        </button>
+                    </div>
+                </div>
+                <div class="data-table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">All Categories</h3>
+                        <div class="search-filter">
+                            <input type="text" class="search-box" placeholder="Search categories..." id="categorySearch">
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Tours Count</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTableBody">
+                            <!-- Categories will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- Add/Edit Modal -->
+    <div class="modal" id="addEditModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Add New Item</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addEditForm">
+                    <div id="modalFormContent">
+                        <!-- Form content will be dynamically loaded here -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-success" form="addEditForm" id="saveBtn">Save</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentEditingId = null;
+        let currentEditingType = null;
+
+        // Initialize the admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeNavigation();
+            renderDestinations();
+            renderCategories();
+            updateDashboardStats();
+
+            // Set up listeners for real-time updates
+            vacationDataManager.addListener('destinations', (action, data) => {
+                renderDestinations();
+                updateDashboardStats();
+                showSyncIndicator();
+            });
+
+            vacationDataManager.addListener('categories', (action, data) => {
+                renderCategories();
+                updateDashboardStats();
+                showSyncIndicator();
+            });
+        });
+
+        function showSyncIndicator() {
+            const indicator = document.getElementById('sync-indicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 3000);
+        }
+
+        // Navigation functionality
+        function initializeNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.content-section');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Remove active class from all links and sections
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    // Show corresponding section
+                    const targetSection = this.getAttribute('data-section');
+                    const section = document.getElementById(targetSection);
+                    if (section) {
+                        section.classList.add('active');
+                        section.style.display = 'block';
+                        // Hide other sections
+                        sections.forEach(s => {
+                            if (s.id !== targetSection) {
+                                s.style.display = 'none';
+                            }
+                        });
+                        // Add animation
+                        section.classList.add('animate-in');
+                    }
+                });
+            });
+            // Initialize first section
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        // Render destinations table
+        function renderDestinations() {
+            const tbody = document.getElementById('destinationsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            vacationDataManager.destinations.forEach(destination => {
+                const row = `
+                    <tr>
+                        <td>
+                            <div class="table-image" style="background-image: url('${destination.image}'); background-size: cover; background-position: center;">
+                                <!-- Image will be shown as background -->
+                            </div>
+                        </td>
+                        <td>${destination.name}</td>
+                        <td>${destination.location}</td>
+                        <td>$${destination.price}/person</td>
+                        <td>${destination.duration}</td>
+                        <td>
+                            <span class="status-badge ${destination.status === 'active' ? 'status-active' : 'status-inactive'}">
+                                ${destination.status.charAt(0).toUpperCase() + destination.status.slice(1)}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn btn-warning btn-sm" onclick="editItem('destination', ${destination.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteItem('destination', ${destination.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Render categories table
+        function renderCategories() {
+            const tbody = document.getElementById('categoriesTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            vacationDataManager.categories.forEach(category => {
+                const row = `
+                    <tr>
+                        <td>
+                            <div class="table-image" style="background-image: url('${category.image}'); background-size: cover; background-position: center;">
+                                <!-- Image will be shown as background -->
+                            </div>
+                        </td>
+                        <td>${category.name}</td>
+                        <td>${category.toursCount} Tours</td>
+                        <td>
+                            <span class="status-badge ${category.status === 'active' ? 'status-active' : 'status-inactive'}">
+                                ${category.status.charAt(0).toUpperCase() + category.status.slice(1)}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn btn-warning btn-sm" onclick="editItem('category', ${category.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteItem('category', ${category.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Update dashboard statistics
+        function updateDashboardStats() {
+            document.getElementById('totalDestinations').textContent = vacationDataManager.destinations.length;
+            document.getElementById('totalCategories').textContent = vacationDataManager.categories.length;
+            document.getElementById('totalImages').textContent = vacationDataManager.destinations.length + vacationDataManager.categories.length;
+        }
+
+        // Show add/edit modal
+        function showAddModal(type) {
+            currentEditingType = type;
+            currentEditingId = null;
+            const modal = document.getElementById('addEditModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const formContent = document.getElementById('modalFormContent');
+            modalTitle.textContent = `Add New ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            if (type === 'destination') {
+                formContent.innerHTML = getDestinationFormHTML();
+            } else if (type === 'category') {
+                formContent.innerHTML = getCategoryFormHTML();
+            }
+            modal.classList.add('show');
+        }
+
+        // Edit item
+        function editItem(type, id) {
+            currentEditingType = type;
+            currentEditingId = id;
+            const modal = document.getElementById('addEditModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const formContent = document.getElementById('modalFormContent');
+            modalTitle.textContent = `Edit ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            let item;
+            if (type === 'destination') {
+                item = vacationDataManager.destinations.find(d => d.id === id);
+                formContent.innerHTML = getDestinationFormHTML(item);
+            } else if (type === 'category') {
+                item = vacationDataManager.categories.find(c => c.id === id);
+                formContent.innerHTML = getCategoryFormHTML(item);
+            }
+            modal.classList.add('show');
+        }
+
+        // Delete item
+        function deleteItem(type, id) {
+            if (confirm(`Are you sure you want to delete this ${type}?`)) {
+                if (type === 'destination') {
+                    vacationDataManager.deleteDestination(id);
+                    addActivity('Deleted destination', `ID: ${id}`);
+                } else if (type === 'category') {
+                    vacationDataManager.deleteCategory(id);
+                    addActivity('Deleted category', `ID: ${id}`);
+                }
+                showNotification(`${type.charAt(0).toUpperCase() + type.slice(1)} deleted successfully!`, 'success');
+            }
+        }
+
+        // Get destination form HTML
+        function getDestinationFormHTML(destination = null) {
+            return `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Destination Name</label>
+                        <input type="text" class="form-control" id="destinationName" placeholder="Enter destination name" value="${destination ? destination.name : ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-control" id="destinationLocation" placeholder="Enter location" value="${destination ? destination.location : ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price (per person)</label>
+                        <input type="number" class="form-control" id="destinationPrice" placeholder="Enter price" value="${destination ? destination.price : ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration</label>
+                        <input type="text" class="form-control" id="destinationDuration" placeholder="e.g., 7 Days Tour" value="${destination ? destination.duration : ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="destinationStatus" required>
+                            <option value="active" ${destination && destination.status === 'active' ? 'selected' : ''}>Active</option>
+                            <option value="inactive" ${destination && destination.status === 'inactive' ? 'selected' : ''}>Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image</label>
+                        <div class="file-upload">
+                            <input type="file" id="destinationImage" accept="image/*" onchange="previewImage(this, 'destinationImagePreview')">
+                            <label for="destinationImage" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                Choose Image
+                            </label>
+                        </div>
+                        <div class="image-preview" id="destinationImagePreview">
+                            ${destination && destination.image ? `<img src="${destination.image}" alt="Preview">` : '<i class="fas fa-image"></i>'}
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="destinationDescription" rows="4" placeholder="Enter destination description">${destination ? destination.description : ''}</textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Amenities (one per line)</label>
+                        <textarea class="form-control" id="destinationAmenities" rows="3" placeholder="Enter amenities...">${destination ? destination.amenities.join('\n') : ''}</textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Get category form HTML
+        function getCategoryFormHTML(category = null) {
+            return `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name" value="${category ? category.name : ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tours Count</label>
+                        <input type="number" class="form-control" id="categoryToursCount" placeholder="Number of tours" value="${category ? category.toursCount : ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="categoryStatus" required>
+                            <option value="active" ${category && category.status === 'active' ? 'selected' : ''}>Active</option>
+                            <option value="inactive" ${category && category.status === 'inactive' ? 'selected' : ''}>Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image</label>
+                        <div class="file-upload">
+                            <input type="file" id="categoryImage" accept="image/*" onchange="previewImage(this, 'categoryImagePreview')">
+                            <label for="categoryImage" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                Choose Image
+                            </label>
+                        </div>
+                        <div class="image-preview" id="categoryImagePreview">
+                            ${category && category.image ? `<img src="${category.image}" alt="Preview">` : '<i class="fas fa-image"></i>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Preview uploaded image
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('addEditForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.classList.add('btn-loading');
+            saveBtn.disabled = true;
+            setTimeout(() => {
+                if (currentEditingType === 'destination') {
+                    saveDestination();
+                } else if (currentEditingType === 'category') {
+                    saveCategory();
+                }
+                saveBtn.classList.remove('btn-loading');
+                saveBtn.disabled = false;
+                closeModal();
+            }, 1000);
+        });
+
+        // Save destination
+        function saveDestination() {
+            const name = document.getElementById('destinationName').value;
+            const location = document.getElementById('destinationLocation').value;
+            const price = parseInt(document.getElementById('destinationPrice').value);
+            const duration = document.getElementById('destinationDuration').value;
+            const status = document.getElementById('destinationStatus').value;
+            const description = document.getElementById('destinationDescription').value;
+            const amenities = document.getElementById('destinationAmenities').value.split('\n').filter(a => a.trim());
+
+            // Get the image from the preview (this will be a data URL from the file upload)
+            const imagePreview = document.querySelector('#destinationImagePreview img');
+            const image = imagePreview ? imagePreview.src : "destination-placeholder.jpg";
+
+            const destinationData = {
+                name,
+                location,
+                price,
+                duration,
+                status,
+                description,
+                amenities,
+                image
+            };
+
+            if (currentEditingId) {
+                // Update existing
+                vacationDataManager.updateDestination(currentEditingId, destinationData);
+                addActivity('Updated destination', name);
+            } else {
+                // Add new
+                vacationDataManager.addDestination(destinationData);
+                addActivity('Added new destination', name);
+            }
+            showNotification('Destination saved successfully!', 'success');
+        }
+
+        // Save category
+        function saveCategory() {
+            const name = document.getElementById('categoryName').value;
+            const toursCount = parseInt(document.getElementById('categoryToursCount').value);
+            const status = document.getElementById('categoryStatus').value;
+
+            // Get the image from the preview
+            const imagePreview = document.querySelector('#categoryImagePreview img');
+            const image = imagePreview ? imagePreview.src : "category-placeholder.jpg";
+
+            const categoryData = {
+                name,
+                toursCount,
+                status,
+                image
+            };
+
+            if (currentEditingId) {
+                // Update existing
+                vacationDataManager.updateCategory(currentEditingId, categoryData);
+                addActivity('Updated category', name);
+            } else {
+                // Add new
+                vacationDataManager.addCategory(categoryData);
+                addActivity('Added new category', name);
+            }
+            showNotification('Category saved successfully!', 'success');
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('addEditModal');
+            modal.classList.remove('show');
+            currentEditingId = null;
+            currentEditingType = null;
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-gradient)' : 'var(--danger-gradient)'};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 15px;
+                z-index: 3000;
+                animation: slideInRight 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                font-weight: 600;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                ${message}
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Search and Filter functionality
+        document.getElementById('destinationSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tbody = document.getElementById('destinationsTableBody');
+            const rows = tbody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                const location = row.cells[2].textContent.toLowerCase();
+                if (name.includes(searchTerm) || location.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById('categorySearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tbody = document.getElementById('categoriesTableBody');
+            const rows = tbody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById('statusFilter').addEventListener('change', function(e) {
+            const statusFilter = e.target.value;
+            const tbody = document.getElementById('destinationsTableBody');
+            const rows = tbody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const statusText = row.cells[5].textContent.toLowerCase();
+                if (statusFilter === '' || statusText.includes(statusFilter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            .content-section {
+                display: none;
+            }
+            .content-section.active {
+                display: block;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
